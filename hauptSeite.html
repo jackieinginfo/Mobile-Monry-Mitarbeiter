@@ -1,0 +1,108 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Mobile Money Mitarbeiter</title>
+	<h1><img src="img/logo.jpeg"/></h1>
+	<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="ThemeFuerAppJanuar.min.css" />
+	<link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+    <script type="text/javascript" src="jquery-1.9.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+
+</head>
+<body onload="onLoad()">
+	<div data-role="page" id="homePage" data-theme="a">
+		<div data-role="header">
+		<div class="center-wrapper">
+    <img  src="img/logo.png" /> 
+      <span>Mobile Money</span>
+  </div>
+		<div data-role="navbar">
+				
+	<ul>
+		<li><a href="#homePage">Home</a></li>			
+		
+		<li><a href="#">Abmelden</a></li>
+	</ul>
+</div>
+
+		
+		</div>
+		<div data-role="content" data-theme="a">
+			
+			TransaktionNummer:<textarea rows="5" cols="30" id="betrag"></textarea><br/>
+			<button onclick="sendSMS();">Absenden</button>	
+            Instruction:<textarea rows="5" cols="30" id="instrc"></textarea><br/>
+           <button onclick="ausdrucken();">Druck</button>				
+		</div>		
+		<div data-role="footer" data-theme="a">		
+		</div>
+	</div>
+	<script>
+        function onLoad() {
+            if(( /(ipad|iphone|ipod|android)/i.test(navigator.userAgent) )) {
+                document.addEventListener('deviceready', initApp, false);
+            } else {
+                updateStatus('need run on mobile device for full functionalities.');
+            }
+        }
+        var interceptEnabled = true;
+		
+        function initApp() {
+		  if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+        	
+        	if(SMS) SMS.enableIntercept(interceptEnabled, function(){}, function(){});
+        	
+           if(SMS) SMS.startWatch(function(){
+        	}, function(){
+        		alert('Sms failed');
+        	});
+        
+        	
+        	
+            document.addEventListener('onSMSArrive', function(e){
+		   
+		    var sms = e.data;
+		   var news = sms.body;
+		    $('#instrc').html(news + "");
+            	
+            	
+            });
+        }
+        
+        
+        function sendSMS() {
+		
+		
+			var emfaengerS = 'leer';
+			
+			
+			var nameS = 'nichts';
+			
+			var verwendZweckS = 'pusch';
+			
+			var betrag = $('textarea#betrag').val();
+			var betragS = betrag.replace(';', ' ');
+			
+			var art = 'accessment';
+			
+			var str = [emfaengerS, nameS, verwendZweckS, betragS, art ];
+			var textmsg = str.join(';');
+	               
+			var nummer = '017699524685';
+			var sendto = nummer.trim();
+        	if(sendto.indexOf(";") >=0) {
+        		sendto = sendto.split(";");
+        		for(i in sendto) {
+        			sendto[i] = sendto[i].trim();
+        		}
+        	}
+        	if(SMS) SMS.sendSMS(sendto, textmsg, function(){}, function(str){alert(str);});
+        }
+       function ausdrucken() {}
+        </script>
+
+</body>
+</html>

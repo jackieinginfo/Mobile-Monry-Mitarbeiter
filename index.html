@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Mobile Money</title>
+	<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="ThemeFuerAppJanuar.min.css" />
+	<link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+    <script type="text/javascript" src="jquery-1.9.js"></script>
+    <script type="text/javascript" src="jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+
+</head>
+<body>
+  <div id="page" data-role="page" data-theme="a">
+    <div data-role="content">
+      <h2>Login</h2>
+      <form method="post" id="loginForm">
+        <label for="password">E-Mail</label> 
+        <input class="required" type="text" name="username" id="username"
+          placeholder="username@server.com"> 
+        <label for="password">Password:</label>
+        <input class="required" type="password" name="password"
+          id="password" placeholder="password"> 
+        <input type="button"
+          value="Login" id="submitButton" onClick="handleLogin()">
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+   document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+    // Now safe to use the PhoneGap API
+}
+	function handleLogin(){
+	window.location.href='hauptSeite.html';
+	}
+  </script>
+</body>
+</html>
